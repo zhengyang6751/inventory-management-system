@@ -1,142 +1,140 @@
 # Inventory Management System
 
-A comprehensive inventory management solution for small retail stores, built with modern full-stack architecture.
-
-## Tech Stack
-
-### Frontend
-
-- React 18 with TypeScript
-- Vite for build tooling
-- TailwindCSS for styling
-- React Query for state management
-- Axios for API communication
-
-### Backend
-
-- FastAPI (Python 3.8+)
-- SQLAlchemy ORM
-- PostgreSQL
-- JWT Authentication
-- Alembic for migrations
+A full-stack inventory management system built with FastAPI (Backend) and React (Frontend).
 
 ## Features
 
-- User Authentication System
-- Real-time Stock Level Tracking and Alerts
-- Sales Transaction Management
-- Supplier Information Management
-- Returns Processing
-- Automated Reporting
-- Data Backup System
-- Barcode Scanning Support
+- User Authentication (Login/Register)
+- Product Management
+  - Add, Edit, Delete Products
+  - Track Stock Levels
+  - Barcode Support
+  - Category Management
+- Supplier Management
+  - Add, Edit, Delete Suppliers
+  - Track Supplier Information
+- Sales Management
+  - Create Sales Records
+  - Track Sales History
+  - Customer Management
+- Inventory Tracking
+  - Stock Level Monitoring
+  - Low Stock Alerts
+  - Stock Movement History
 
-## Project Structure
+## Tech Stack
 
-```
-inventory_management/
-├── frontend/                # React frontend
-│   ├── src/
-│   │   ├── components/     # Reusable UI components
-│   │   ├── pages/         # Page components
-│   │   ├── services/      # API services
-│   │   ├── utils/         # Utility functions
-│   │   ├── hooks/         # Custom React hooks
-│   │   └── store/         # State management
-│   ├── public/            # Static assets
-│   ├── index.html
-│   ├── package.json
-│   └── vite.config.ts
-│
-├── backend/                # FastAPI backend
-│   ├── app/
-│   │   ├── api/          # API endpoints
-│   │   ├── core/         # Core configurations
-│   │   ├── db/           # Database setup
-│   │   ├── models/       # SQLAlchemy models
-│   │   ├── schemas/      # Pydantic schemas
-│   │   └── services/     # Business logic
-│   ├── tests/
-│   └── requirements.txt
-│
-└── docker/                # Docker configuration
-    ├── docker-compose.yml
-    ├── Dockerfile.frontend
-    └── Dockerfile.backend
-```
+### Backend
 
-## Getting Started
+- FastAPI (Python)
+- SQLAlchemy (ORM)
+- PostgreSQL (Database)
+- Alembic (Database Migrations)
+- JWT Authentication
 
-### Frontend Setup
+### Frontend
 
-```bash
-cd frontend
-npm install
-npm run dev
-```
+- React
+- TypeScript
+- Tailwind CSS
+- React Query
+- React Hook Form
+
+## Setup Instructions
+
+### Prerequisites
+
+- Python 3.8+
+- Node.js 16+
+- PostgreSQL
 
 ### Backend Setup
 
-```bash
-cd backend
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload
-```
+1. Navigate to the backend directory:
 
-### Docker Setup
+   ```bash
+   cd backend
+   ```
 
-```bash
-docker-compose up -d
-```
+2. Create a virtual environment:
 
-## API Documentation
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
 
-Once the backend is running, visit:
+3. Install dependencies:
 
-- Swagger UI: http://localhost:8000/docs
-- ReDoc: http://localhost:8000/redoc
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-## Development
+4. Create a `.env` file in the backend directory with the following content:
 
-### Frontend Development
+   ```
+   DATABASE_URL=postgresql://user:password@localhost:5432/inventory_db
+   SECRET_KEY=your-secret-key
+   ```
 
-```bash
-cd frontend
-npm run dev
-```
+5. Run database migrations:
 
-### Backend Development
+   ```bash
+   alembic upgrade head
+   ```
 
-```bash
-cd backend
-uvicorn app.main:app --reload
-```
+6. Start the backend server:
+   ```bash
+   uvicorn app.main:app --reload
+   ```
 
-## Testing
+### Frontend Setup
 
-### Frontend Tests
+1. Navigate to the frontend directory:
 
-```bash
-cd frontend
-npm test
-```
+   ```bash
+   cd frontend
+   ```
 
-### Backend Tests
+2. Install dependencies:
 
-```bash
-cd backend
-pytest
-```
+   ```bash
+   npm install
+   ```
 
-## Deployment
+3. Create a `.env` file in the frontend directory:
 
-The application can be deployed using Docker:
+   ```
+   VITE_API_URL=http://localhost:8000
+   ```
 
-```bash
-docker-compose -f docker/docker-compose.yml up -d
-```
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+## Docker Setup
+
+You can also run the entire application using Docker:
+
+1. Make sure Docker and Docker Compose are installed
+
+2. Build and run the containers:
+   ```bash
+   docker-compose up --build
+   ```
+
+The application will be available at:
+
+- Frontend: http://localhost:5173
+- Backend API: http://localhost:8000
+- API Documentation: http://localhost:8000/docs
+
+## Default Admin Account
+
+After setting up, you can log in with the default admin account:
+
+- Email: admin@example.com
+- Password: admin
 
 ## License
 
