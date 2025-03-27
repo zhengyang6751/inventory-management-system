@@ -57,4 +57,15 @@ venv/
 ENV/
 
 # Docker
-.docker/ 
+.docker/
+
+# Documentation
+docs/
+
+# Ignore PDF files in docs/uml/pdf
+docs/uml/pdf/
+docs/uml/*.pdf
+
+# Ignore backup files
+docs/uml/.$*.bkp
+docs/uml/.DS_Store 
