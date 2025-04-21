@@ -45,31 +45,31 @@ class Supplier(SupplierBase):
 class ProductBase(BaseModel):
     name: str
     description: Optional[str] = None
-    sku: str
+    sku: Optional[str] = None
     barcode: Optional[str] = None
     price: float = Field(gt=0)
     cost: float = Field(gt=0)
-    stock: float = Field(ge=0)
-    min_quantity: float = Field(ge=0)
-    category_id: Optional[int] = None
-    supplier_id: Optional[int] = None
+    stock: int = Field(ge=0)
+    min_quantity: int = Field(ge=0)
 
 # Properties to receive on product creation
 class ProductCreate(ProductBase):
-    pass
+    category_id: Optional[int] = None
+    supplier_id: Optional[int] = None
 
 # Properties to receive on product update
 class ProductUpdate(ProductBase):
-    name: Optional[str] = None
-    sku: Optional[str] = None
-    price: Optional[float] = Field(None, gt=0)
-    cost: Optional[float] = Field(None, gt=0)
-    stock: Optional[float] = Field(None, ge=0)
-    min_quantity: Optional[float] = Field(None, ge=0)
+    category_id: Optional[int] = None
+    supplier_id: Optional[int] = None
 
 # Properties shared by models stored in DB
 class ProductInDBBase(ProductBase):
     id: int
+    created_by: int
+    created_at: datetime
+    updated_at: Optional[datetime] = None
+    category_id: Optional[int] = None
+    supplier_id: Optional[int] = None
 
     class Config:
         from_attributes = True

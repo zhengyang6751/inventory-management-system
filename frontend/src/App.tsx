@@ -5,6 +5,8 @@ import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import Products from "@/pages/Products";
 import Sales from "@/pages/Sales";
+import Categories from "@/pages/Categories";
+import Suppliers from "@/pages/Suppliers";
 import Navbar from "@/components/Navbar";
 
 function App() {
@@ -27,6 +29,8 @@ function App() {
         <Routes>
           <Route path="/products" element={<Products />} />
           <Route path="/sales" element={<Sales />} />
+          <Route path="/categories" element={<Categories />} />
+          <Route path="/suppliers" element={<Suppliers />} />
           <Route path="*" element={<Navigate to="/products" replace />} />
         </Routes>
       </main>

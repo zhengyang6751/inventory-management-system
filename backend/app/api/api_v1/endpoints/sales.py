@@ -1,7 +1,7 @@
 from typing import List, Optional
 from datetime import datetime, date
 from fastapi import APIRouter, Depends, HTTPException, Query
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 
 from app import crud, models
 from app.api import deps
@@ -58,17 +58,19 @@ def read_sales(
     current_user: models.User = Depends(deps.get_current_user),
 ) -> List[models.Sale]:
     """
-    Retrieve sales.
+    Retrieve sales for the current user.
     """
+    query = db.query(models.Sale).filter(models.Sale.created_by == current_user.id)
+    
     if customer_id:
-        return crud.sale.get_by_customer(db, customer_id=customer_id)
+        query = query.filter(models.Sale.customer_id == customer_id)
     if start_date and end_date:
-        return crud.sale.get_by_date_range(
-            db,
-            start_date=datetime.combine(start_date, datetime.min.time()),
-            end_date=datetime.combine(end_date, datetime.max.time()),
+        query = query.filter(
+            models.Sale.created_at >= datetime.combine(start_date, datetime.min.time()),
+            models.Sale.created_at <= datetime.combine(end_date, datetime.max.time())
         )
-    return crud.sale.get_multi(db, skip=skip, limit=limit)
+    
+    return query.options(joinedload(models.Sale.product), joinedload(models.Sale.customer)).offset(skip).limit(limit).all()
 
 @router.get("/sales/summary")
 def get_sales_summary(

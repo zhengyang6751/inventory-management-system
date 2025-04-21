@@ -1,6 +1,6 @@
 from typing import List
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 
 from app import crud, models
 from app.api import deps
@@ -13,12 +13,19 @@ def read_inventory_transactions(
     db: Session = Depends(deps.get_db),
     skip: int = 0,
     limit: int = 100,
+    current_user: models.User = Depends(deps.get_current_user),
 ) -> List[models.InventoryTransaction]:
     """
-    Retrieve inventory transactions.
+    Get inventory transactions for the current user.
     """
-    transactions = crud.inventory.get_multi(db, skip=skip, limit=limit)
-    return transactions
+    return (
+        db.query(models.InventoryTransaction)
+        .filter(models.InventoryTransaction.created_by == current_user.id)
+        .options(joinedload(models.InventoryTransaction.product))
+        .offset(skip)
+        .limit(limit)
+        .all()
+    )
 
 @router.post("/", response_model=InventoryTransaction)
 def create_inventory_transaction(
@@ -58,9 +65,17 @@ def read_product_transactions(
     *,
     db: Session = Depends(deps.get_db),
     product_id: int,
+    current_user: models.User = Depends(deps.get_current_user),
 ) -> List[models.InventoryTransaction]:
     """
-    Get inventory transactions for a specific product.
+    Get inventory transactions for a specific product and current user.
     """
-    transactions = crud.inventory.get_by_product(db=db, product_id=product_id)
-    return transactions 
+    return (
+        db.query(models.InventoryTransaction)
+        .filter(
+            models.InventoryTransaction.product_id == product_id,
+            models.InventoryTransaction.created_by == current_user.id
+        )
+        .options(joinedload(models.InventoryTransaction.product))
+        .all()
+    ) 

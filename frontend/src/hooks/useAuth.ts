@@ -52,10 +52,10 @@ export function useAuth() {
   const loginMutation = useMutation({
     mutationFn: (credentials: LoginCredentials) => loginApi(credentials),
     onSuccess: (data) => {
+      setUser(data.user);
       localStorage.setItem("token", data.access_token);
       localStorage.setItem("user", JSON.stringify(data.user));
-      setUser(data.user);
-      navigate("/products");
+      navigate("/products", { replace: true });
       toast.success("Login successful!");
       window.location.reload();
     },
@@ -66,13 +66,11 @@ export function useAuth() {
 
   const registerMutation = useMutation({
     mutationFn: (credentials: RegisterCredentials) => registerApi(credentials),
-    onSuccess: (data) => {
-      localStorage.setItem("token", data.access_token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      setUser(data.user);
-      navigate("/products");
-      toast.success("Registration successful!");
-      window.location.reload();
+    onSuccess: () => {
+      toast.success(
+        "Registration successful! Please login with your credentials."
+      );
+      navigate("/login");
     },
     onError: (error: Error) => {
       toast.error(error.message || "Registration failed");

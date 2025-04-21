@@ -5,6 +5,8 @@ import { useAuth } from "@/hooks/useAuth";
 const navigation = [
   { name: "Products", href: "/products" },
   { name: "Sales", href: "/sales" },
+  { name: "Categories", href: "/categories" },
+  { name: "Suppliers", href: "/suppliers" },
 ];
 
 export default function Navbar() {

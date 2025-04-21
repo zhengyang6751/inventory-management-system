@@ -18,4 +18,5 @@ class User(Base):
 
     # Relationships
     inventory_transactions = relationship("InventoryTransaction", back_populates="user")
-    sales = relationship("Sale", back_populates="created_by_user") 
+    sales = relationship("Sale", back_populates="created_by_user")
+    products = relationship("Product", back_populates="created_by_user") 

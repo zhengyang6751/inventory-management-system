@@ -17,6 +17,7 @@ class Product(Base):
     min_quantity = Column(Integer, nullable=False, default=0)
     category_id = Column(Integer, ForeignKey("categories.id"))
     supplier_id = Column(Integer, ForeignKey("suppliers.id"))
+    created_by = Column(Integer, ForeignKey("users.id"), nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
 
@@ -24,3 +25,4 @@ class Product(Base):
     supplier = relationship("Supplier", back_populates="products")
     inventory_transactions = relationship("InventoryTransaction", back_populates="product")
     sales = relationship("Sale", back_populates="product")
+    created_by_user = relationship("User", back_populates="products")

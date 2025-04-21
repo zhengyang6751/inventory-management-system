@@ -46,9 +46,6 @@ export async function login(
     );
     console.log("Login successful:", response.data);
 
-    // Set the token for subsequent requests
-    localStorage.setItem("token", response.data.access_token);
-
     // Get user info
     const userResponse = await api.get<User>("/users/me", {
       headers: {
