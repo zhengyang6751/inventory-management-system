@@ -23,11 +23,12 @@ COPY backend/requirements.txt .
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Copy start script and make it executable
+COPY backend/start.sh .
+RUN chmod +x start.sh
+
 # Copy project
 COPY backend .
-
-# Make start script executable
-RUN chmod +x start.sh
 
 # Expose port
 EXPOSE 8000
