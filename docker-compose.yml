@@ -14,6 +14,11 @@ services:
         condition: service_healthy
     volumes:
       - ./backend:/app/backend
+    restart: always
+    command: >
+      sh -c "alembic upgrade head &&
+             python -c 'from app.db.init_db import init_db; from app.db.session import SessionLocal; init_db(SessionLocal())' &&
+             uvicorn app.main:app --host 0.0.0.0 --port 8000"
 
   frontend:
     build:
@@ -28,6 +33,7 @@ services:
       - VITE_API_URL=http://localhost:8000
     depends_on:
       - backend
+    restart: always
 
   db:
     image: postgres:13
@@ -44,6 +50,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    restart: always
 
 volumes:
   postgres_data:

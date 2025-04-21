@@ -49,8 +49,10 @@ A full-stack inventory management system built with FastAPI (Backend) and React 
 
 - Docker
 - Docker Compose
+- Node.js 16+ (for local development)
+- Python 3.8+ (for local development)
 
-### Quick Start with Docker
+### Quick Start with Docker (Recommended)
 
 1. Clone the repository:
 
@@ -59,19 +61,42 @@ A full-stack inventory management system built with FastAPI (Backend) and React 
    cd inventory-management-system
    ```
 
-2. Start all services using Docker Compose:
+2. Copy the example environment file:
+
+   ```bash
+   # For backend
+   cp backend/.env.example backend/.env
+   ```
+
+3. Install frontend dependencies:
+
+   ```bash
+   cd frontend
+   npm install
+   cd ..
+   ```
+
+4. Start all services using Docker Compose:
 
    ```bash
    docker-compose up --build
    ```
 
-3. Access the application:
+5. Wait for the services to start:
+
+   - The database will initialize first
+   - The backend will automatically:
+     - Create database tables
+     - Initialize default data (admin user, categories, etc.)
+   - The frontend will start last
+
+6. Access the application:
 
    - Frontend: http://localhost:5173
    - Backend API: http://localhost:8000
    - API Documentation: http://localhost:8000/docs
 
-4. Default Admin Account:
+7. Default Admin Account:
    - Email: admin@example.com
    - Password: admin
 
@@ -144,6 +169,39 @@ If you want to run the services separately for development:
    ```bash
    npm run dev
    ```
+
+## Troubleshooting
+
+### Common Issues
+
+1. Frontend Build Error: "Failed to resolve import @/lib/axios"
+
+   - Solution: Make sure you've installed the dependencies by running `npm install` in the frontend directory
+   - Check that you're using Node.js version 16 or higher
+
+2. Database Connection Error
+
+   - When using Docker: Make sure you're using `docker-compose up --build` to start all services
+   - For local development: Ensure PostgreSQL is running and accessible at localhost:5432
+
+3. Backend Startup Error
+
+   - Check that the database is running and accessible
+   - Verify that all environment variables are set correctly
+   - Make sure all required Python packages are installed
+
+4. Frontend Development Server Issues
+   - Clear your browser cache
+   - Delete the `node_modules` folder and run `npm install` again
+   - Check that you're using the correct Node.js version
+
+### Still Having Issues?
+
+If you're still experiencing problems:
+
+1. Make sure all services are stopped: `docker-compose down`
+2. Remove all containers and volumes: `docker-compose down -v`
+3. Rebuild all services: `docker-compose up --build`
 
 ## API Documentation
 
