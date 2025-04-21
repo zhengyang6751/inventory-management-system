@@ -31,9 +31,9 @@ class Settings(BaseSettings):
     VERSION: str = "1.0.0"
     DESCRIPTION: str = "Backend API for Inventory Management System"
 
-    POSTGRES_SERVER: str = "localhost"
+    POSTGRES_SERVER: str = "db"  # 修改默认值为 db
     POSTGRES_USER: str = "postgres"
-    POSTGRES_PASSWORD: str = ""
+    POSTGRES_PASSWORD: str = "postgres"  # 修改默认密码
     POSTGRES_DB: str = "inventory"
     SQLALCHEMY_DATABASE_URI: Optional[str] = None
 
@@ -41,7 +41,7 @@ class Settings(BaseSettings):
     def assemble_db_connection(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
         if isinstance(v, str):
             return v
-        return f"postgresql://{values.get('POSTGRES_USER')}:{values.get('POSTGRES_PASSWORD')}@{values.get('POSTGRES_SERVER')}/{values.get('POSTGRES_DB')}"
+        return f"postgresql://{values.get('POSTGRES_USER')}:{values.get('POSTGRES_PASSWORD')}@{values.get('POSTGRES_SERVER')}:5432/{values.get('POSTGRES_DB')}"  # 添加端口号
 
     # JWT settings
     ALGORITHM: str = "HS256"
@@ -54,4 +54,4 @@ class Settings(BaseSettings):
         case_sensitive = True
         env_file = ".env"
 
-settings = Settings() 
+settings = Settings()
