@@ -11,42 +11,34 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
-lib64/
+/lib/
+/lib64/
 parts/
 sdist/
 var/
 *.egg-info/
 .installed.cfg
 *.egg
-
-# Virtual Environment
-venv/
-ENV/
+.env
 
 # Node
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-# Environment variables
-.env
 .env.local
-.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+.pnp
+.pnp.js
 
 # IDE
 .idea/
 .vscode/
 *.swp
 *.swo
-
-# OS
 .DS_Store
-Thumbs.db
-
-# Project specific
-postgres_data/
 
 # Distribution / packaging
 dist/
@@ -58,6 +50,11 @@ coverage/
 .pytest_cache/
 .coverage
 htmlcov/
+
+# Virtual Environment
+venv/
+.venv/
+ENV/
 
 # Docker
 .docker/
@@ -71,4 +68,7 @@ docs/uml/*.pdf
 
 # Ignore backup files
 docs/uml/.$*.bkp
-docs/uml/.DS_Store 
+docs/uml/.DS_Store
+
+# Explicitly include frontend/src/lib
+!frontend/src/lib/ 
