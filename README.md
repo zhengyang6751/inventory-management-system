@@ -8,7 +8,6 @@ A full-stack inventory management system built with FastAPI (Backend) and React 
 - Product Management
   - Add, Edit, Delete Products
   - Track Stock Levels
-  - Barcode Support
   - Category Management
 - Category Management
   - Add, Edit, Delete Categories
@@ -20,10 +19,8 @@ A full-stack inventory management system built with FastAPI (Backend) and React 
 - Sales Management
   - Create Sales Records
   - Track Sales History
-  - Customer Management
 - Inventory Tracking
   - Stock Level Monitoring
-  - Low Stock Alerts
   - Stock Movement History
 
 ## Tech Stack
@@ -31,6 +28,7 @@ A full-stack inventory management system built with FastAPI (Backend) and React 
 ### Backend
 
 - FastAPI (Python)
+- Pydantic (Data Validation)
 - SQLAlchemy (ORM)
 - PostgreSQL (Database)
 - Alembic (Database Migrations)
@@ -40,6 +38,7 @@ A full-stack inventory management system built with FastAPI (Backend) and React 
 
 - React
 - TypeScript
+- Vite (Build Tool)
 - Tailwind CSS
 - React Query
 - React Hook Form
@@ -67,9 +66,14 @@ A full-stack inventory management system built with FastAPI (Backend) and React 
    ```
 
 3. Access the application:
-   - Frontend: http://localhost:3000
+
+   - Frontend: http://localhost:5173
    - Backend API: http://localhost:8000
    - API Documentation: http://localhost:8000/docs
+
+4. Default Admin Account:
+   - Email: admin@example.com
+   - Password: admin
 
 ### Development Setup
 
@@ -106,7 +110,17 @@ If you want to run the services separately for development:
    SECRET_KEY=your-secret-key
    ```
 
-5. Start the backend server:
+5. Initialize the database:
+
+   ```bash
+   # Create database tables
+   alembic upgrade head
+
+   # Initialize initial data
+   python -c "from app.db.init_db import init_db; from app.db.session import SessionLocal; init_db(SessionLocal())"
+   ```
+
+6. Start the backend server:
    ```bash
    ENV_FILE=.env.local uvicorn app.main:app --reload
    ```
